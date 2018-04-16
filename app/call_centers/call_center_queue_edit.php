@@ -219,8 +219,9 @@
 
 		//get the application and data
 			$action_array = explode(":",$queue_timeout_action);
-			$queue_timeout_application = $action_array[0];
-			$queue_timeout_data = substr($queue_timeout_action, strlen($action_array[0])+1, strlen($queue_timeout_application));
+			$queue_timeout_app = $action_array[0];
+			unset($action_array[0]);
+			$queue_timeout_data = implode($action_array);
 
 		//build the xml dialplan
 			$dialplan_xml = "<extension name=\"".$queue_name."\" continue=\"\" uuid=\"".$dialplan_uuid."\">\n";
@@ -237,7 +238,7 @@
 				$dialplan_xml .= "		<action application=\"set\" data=\"cc_exit_keys=".$queue_cc_exit_keys."\"/>\n";
 			}
 			$dialplan_xml .= "		<action application=\"callcenter\" data=\"".$call_center_queue_uuid."\"/>\n";
-			$dialplan_xml .= "		<action application=\"".$queue_timeout_application."\" data=\"".$queue_timeout_data."\"/>\n";
+			$dialplan_xml .= "		<action application=\"".$queue_timeout_app."\" data=\"".$queue_timeout_data."\"/>\n";
 			$dialplan_xml .= "	</condition>\n";
 			$dialplan_xml .= "</extension>\n";
 
@@ -462,7 +463,7 @@
 	if ($action == "update") {
 		echo "	&nbsp;&nbsp;&nbsp;";
 		if (permission_exists('call_center_wallboard')) {
-			echo "  <input type='button' class='btn' value='".$text['button-wallboard']."' onclick=\"document.location.href='call_center_wallboard.php?queue_name=".$database_queue_name."';\" />\n";
+			echo "  <input type='button' class='btn' value='".$text['button-wallboard']."' onclick=\"document.location.href='call_center_wallboard.php?queue_name=".$call_center_queue_uuid."';\" />\n";
 		}
 		echo "  <input type='button' class='btn' value='".$text['button-stop']."' onclick=\"document.location.href='cmd.php?cmd=api+callcenter_config+queue+unload+".$call_center_queue_uuid."';\" />\n";
 		echo "  <input type='button' class='btn' value='".$text['button-start']."' onclick=\"document.location.href='cmd.php?cmd=api+callcenter_config+queue+load+".$call_center_queue_uuid."';\" />\n";
