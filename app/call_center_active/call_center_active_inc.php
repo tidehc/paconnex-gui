@@ -1,4 +1,4 @@
-\<?php
+<?php
 /*
 	FusionPBX
 	Version: MPL 1.1
@@ -190,7 +190,7 @@
 							//get the agent name
 							$agent_name = '';
 							if (is_array($_SESSION['agents'])) foreach ($_SESSION['agents'] as $agent) {
-								if ($agent['call_center_agent_uuid'] = $agent_uuid) {
+								if ($agent['call_center_agent_uuid'] == $agent_uuid) {
 									$agent_name = $agent['agent_name'];
 								}
 							}
@@ -357,7 +357,7 @@
 				//get the serving agent name
 				$serving_agent_name = '';
 				if (is_array($_SESSION['agents'])) foreach ($_SESSION['agents'] as $agent) {
-					if ($agent['call_center_agent_uuid'] = $serving_agent) {
+					if ($agent['call_center_agent_uuid'] == $serving_agent) {
 						$serving_agent_name = $agent['agent_name'];
 					}
 				}
