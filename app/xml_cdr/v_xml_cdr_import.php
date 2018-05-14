@@ -277,7 +277,13 @@
 						$database->fields[$field_name] = urldecode($array[$fields[0]][$fields[1]]);
 					}
 					if (count($fields) == 3) {
-						$database->fields[$field_name] = urldecode($array[$fields[0]][$fields[1]][$fields[2]]);
+						$database->fields[$field_name] = urldecode($array[$fields[0]][0][$fields[1]][$fields[2]]);
+					}
+					if (count($fields) == 4) {
+						$database->fields[$field_name] = urldecode($array[$fields[0]][$fields[1]][$fields[2]][$fields[3]]);
+					}
+					if (count($fields) == 5) {
+						$database->fields[$field_name] = urldecode($array[$fields[0]][$fields[1]][$fields[2]][$fields[3]][$fields[4]]);
 					}
 				}
 			}
@@ -296,6 +302,11 @@
 			if (strlen($xml->variables->record_session) > 0) {
 				$record_path = urldecode($xml->variables->record_path);
 				$record_name = urldecode($xml->variables->record_name);
+				$record_length = urldecode($xml->variables->record_seconds);
+			}
+			elseif (strlen($record_path) == 0 and urldecode($xml->variables->last_app) == "record_session") {
+				$record_path = dirname(urldecode($xml->variables->last_arg));
+				$record_name = basename(urldecode($xml->variables->last_arg));
 				$record_length = urldecode($xml->variables->record_seconds);
 			}
 			elseif (strlen($xml->variables->record_name) > 0) {
