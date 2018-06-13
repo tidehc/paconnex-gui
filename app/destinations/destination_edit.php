@@ -630,7 +630,7 @@
 			if ($action == "update") {
 				messages::add($text['message-update']);
 			}
-			header("Location: destination_edit.php?id=".$destination_uuid."&type=".$destination_type);
+			header("Location: destination_edit.php?id=".escape($destination_uuid)."&type=".$destination_type);
 			return;
 
 	} //(count($_POST) > 0 && strlen($_POST["persistformvar"]) == 0)
@@ -942,7 +942,7 @@
 					echo "		<option value='".escape($row["fax_uuid"])."' selected='selected'>".escape($row["fax_extension"])." ".escape($row["fax_name"])."</option>\n";
 				}
 				else {
-					echo "		<option value='".escape($row["fax_uuid"])."'>".escape($row["fax_extension")]." ".escape($row["fax_name"])."</option>\n";
+					echo "		<option value='".escape($row["fax_uuid"])."'>".escape($row["fax_extension"])." ".escape($row["fax_name"])."</option>\n";
 				}
 			}
 			echo "	</select>\n";
