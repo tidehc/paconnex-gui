@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2018
+	Portions created by the Initial Developer are Copyright (C) 2008-2016
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -92,12 +92,8 @@
 	$sql .= "limit $rows_per_page offset $offset ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$sip_profiles = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-	foreach ($sip_profiles as &$row) { $row = array_map("escape", $row); }
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	unset ($prep_statement, $sql);
-
-//escape the search
-	$search = escape($search);
 
 //alternate the row style
 	$c = 0;
@@ -138,8 +134,8 @@
 	echo "</td>\n";
 	echo "<tr>\n";
 
-	if (is_array($sip_profiles)) {
-		foreach($sip_profiles as $row) {
+	if (is_array($result)) {
+		foreach($result as $row) {
 			if (permission_exists('sip_profile_edit')) {
 				$tr_link = "href='sip_profile_edit.php?id=".$row['sip_profile_uuid']."'";
 			}
@@ -159,7 +155,7 @@
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
-		unset($sql, $sip_profiles);
+		unset($sql, $result, $row_count);
 	} //end if results
 
 	echo "<tr>\n";
