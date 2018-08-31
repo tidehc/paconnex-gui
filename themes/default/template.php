@@ -77,14 +77,14 @@
 					object.clearQueue().finish();
 					object.animate({height: '0', 'font-size': '0', 'border-bottom-width': '0'}, 1000).animate({opacity: 0});
 				} );
-				$("#messages_container").append(message_text);
+				$("#message_container").append(message_text);
 				message_text.animate({opacity: 1}, 'fast').delay(delay).animate({height: '0', 'font-size': '0', 'border-bottom-width': '0'}, 1000).animate({opacity: 0});
 			}
 		}
 
 	$(document).ready(function() {
 
-<?php	echo messages::html(true, "		");?>
+<?php	echo message::html(true, "		");?>
 
 		//hide message bar on hover
 			$("#message_text").mouseover(function() { $(this).hide(); $("#message_container").hide(); });
@@ -290,7 +290,7 @@
 
 <body onload="<?php echo $onload;?>">
 
-	<div id='messages_container'></div>
+	<div id='message_container'></div>
 
 	<?php
 	//logged in show the domains block
