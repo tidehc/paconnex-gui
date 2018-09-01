@@ -88,12 +88,12 @@
 
 //prepare to page the results
 	$sql = "select count(message_uuid) as num_rows from v_messages ";
-	$sql .= "where user_uuid = '".$_SESSION['user_uuid']."' ";
 	if ($_GET['show'] == "all" && permission_exists('message_all')) {
 		if (isset($sql_search)) {
-			$sql .= "and ".$sql_search;
+			$sql .= "where ".$sql_search;
 		}
 	} else {
+		$sql .= "where user_uuid = '".$_SESSION['user_uuid']."' ";
 		$sql .= "and (domain_uuid = '".$domain_uuid."' or domain_uuid is null) ";
 		if (isset($sql_search)) {
 			$sql .= "and ".$sql_search;
@@ -124,12 +124,12 @@
 
 //get the list
 	$sql = "select * from v_messages ";
-	$sql .= "where user_uuid = '".$_SESSION['user_uuid']."' ";
 	if ($_GET['show'] == "all" && permission_exists('message_all')) {
 		if (isset($sql_search)) {
-			$sql .= "and ".$sql_search;
+			$sql .= "where ".$sql_search;
 		}
 	} else {
+		$sql .= "where user_uuid = '".$_SESSION['user_uuid']."' ";
 		$sql .= "and (domain_uuid = '".$domain_uuid."' or domain_uuid is null) ";
 		if (isset($sql_search)) {
 				$sql .= "and ".$sql_search;
@@ -170,13 +170,14 @@
 	echo "		<td width='50%' align='left' nowrap='nowrap'><b>".$text['title-messages']."</b></td>\n";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td width='50%' style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
+	echo "				<input type='button' class='btn' value='".$text['button-send']."' onclick=\"window.location='message_send.php';\">\n";
 
 	if (permission_exists('message_all')) {
 		if ($_GET['show'] == 'all') {
-			echo "		<input type='hidden' name='show' value='all'>";
+			echo "				<input type='hidden' name='show' value='all'>";
 		}
 		else {
-			echo "		<input type='button' class='btn' value='".$text['button-show_all']."' onclick=\"window.location='messages.php?show=all';\">\n";
+			echo "				<input type='button' class='btn' value='".$text['button-show_all']."' onclick=\"window.location='messages.php?show=all';\">\n";
 		}
 	}
 
@@ -203,12 +204,7 @@
 				echo th_order_by('message_to', $text['label-message_to'], $order_by, $order);
 				echo th_order_by('message_text', $text['label-message_text'], $order_by, $order);
 				echo "	<td class='list_control_icons'>";
-				if (permission_exists('message_add')) {
-					echo "		<a href='message_edit.php' alt='".$text['button-add']."'>$v_link_label_add</a>";
-				}
-				else {
-					echo "&nbsp;\n";
-				}
+				echo "		&nbsp;\n";
 				echo "	</td>\n";
 				echo "</tr>\n";
 
@@ -254,12 +250,7 @@
 	echo "		<td width='33.3%' nowrap='nowrap'>&nbsp;</td>\n";
 	echo "		<td width='33.3%' align='center' nowrap='nowrap'>$paging_controls</td>\n";
 	echo "		<td class='list_control_icons'>";
-	if (permission_exists('message_add')) {
-		echo 		"<a href='message_edit.php' alt='".$text['button-add']."'>$v_link_label_add</a>";
-	}
-	else {
-		echo 		"&nbsp;";
-	}
+	echo "			&nbsp;";
 	echo "		</td>\n";
 	echo "	</tr>\n";
  	echo "	</table>\n";
