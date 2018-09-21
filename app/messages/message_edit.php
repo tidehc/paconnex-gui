@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2016-2018
+	Portions created by the Initial Developer are Copyright (C) 2018
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -133,10 +133,10 @@
 		//redirect the user
 			if (isset($action)) {
 				if ($action == "add") {
-					$_SESSION["message"] = $text['message-add'];
+					message::add($text['message-add']);
 				}
 				if ($action == "update") {
-					$_SESSION["message"] = $text['message-update'];
+					message::add($text['message-update']);
 				}
 				header('Location: message_edit.php?id='.$message_uuid);
 				return;
@@ -255,17 +255,17 @@
 	echo "<td class='vtable' style='position: relative;' align='left'>\n";
 		echo "	<select class='formfld' name='message_direction'>\n";
 		echo "		<option value=''></option>\n";
-		if ($message_direction == "inbound") {
-			echo "		<option value='inbound' selected='selected'>".$text['label-inbound']."</option>\n";
+		if ($message_direction == "receive") {
+			echo "		<option value='inbound' selected='selected'>".$text['label-receive']."</option>\n";
 		}
 		else {
-			echo "		<option value='inbound'>".$text['label-inbound']."</option>\n";
+			echo "		<option value='inbound'>".$text['label-receive']."</option>\n";
 		}
-		if ($message_direction == "outbound") {
-			echo "		<option value='outbound' selected='selected'>".$text['label-outbound']."</option>\n";
+		if ($message_direction == "send") {
+			echo "		<option value='outbound' selected='selected'>".$text['label-send']."</option>\n";
 		}
 		else {
-			echo "		<option value='outbound'>".$text['label-outbound']."</option>\n";
+			echo "		<option value='outbound'>".$text['label-send']."</option>\n";
 		}
 		echo "	</select>\n";
 	echo "<br />\n";
