@@ -458,7 +458,7 @@
 					}
 
 				//send the redirect header
-					header("Location: /app/destinations/destinations.php");
+					header("Location: destinations.php");
 					return;
 			}
 
@@ -758,8 +758,12 @@
 				foreach($schema as $row) {
 					echo "			<optgroup label='".$row['table']."'>\n";
 					foreach($row['fields'] as $field) {
-						if (substr($field, -5) != '_uuid') {
-							echo "				<option value='".$row['table'].".$field'>$field</option>\n";
+						$selected = '';
+						if ($field == $line_field) {
+							$selected = "selected='selected'";
+						}
+						if ($field !== 'domain_uuid') {
+							echo "    			<option value='".$row['table'].".".$field."' ".$selected.">".$field."</option>\n";
 						}
 					}
 					echo "			</optgroup>\n";
@@ -781,9 +785,11 @@
 			switch ($destination_type) {
 				case "inbound" : 	$selected[1] = "selected='selected'";	break;
 				case "outbound" : 	$selected[2] = "selected='selected'";	break;
+				case "local" : 	$selected[2] = "selected='selected'";	break;
 			}
-			echo "	<option value='inbound' ".$selected[1].">".$text['option-type_inbound']."</option>\n";
-			echo "	<option value='outbound' ".$selected[2].">".$text['option-type_outbound']."</option>\n";
+			echo "	<option value='inbound' ".$selected[1].">".$text['option-inbound']."</option>\n";
+			echo "	<option value='outbound' ".$selected[2].">".$text['option-outbound']."</option>\n";
+			echo "	<option value='local' ".$selected[3].">".$text['option-local']."</option>\n";
 			unset($selected);
 			echo "	</select>\n";
 			echo "<br />\n";
@@ -826,7 +832,7 @@
 
 			echo "<tr>\n";
 			echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-			echo "	".$text['label-action']."\n";
+			echo "	".$text['label-actions']."\n";
 			echo "</td>\n";
 			echo "<td class='vtable' align='left'>\n";
 			echo "	<select class='formfld' name='action' id='action'>\n";
@@ -834,7 +840,7 @@
 			echo "	<option value='delete'>".$text['label-delete']."</option>\n";
 			echo "	</select>\n";
 			echo "<br />\n";
-			echo $text['description-action']."\n";
+			echo $text['description-actions']."\n";
 			echo "</td>\n";
 			echo "</tr>\n";
 

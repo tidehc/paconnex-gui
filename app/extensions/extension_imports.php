@@ -30,7 +30,7 @@
 	require_once "resources/check_auth.php";
 
 //check permissions
-	if (permission_exists('device_add')) {
+	if (permission_exists('extension_import')) {
 		//access granted
 	}
 	else {
@@ -67,14 +67,14 @@
 
 //save the data to the csv file
 	if (isset($_POST['data'])) {
-		$file = $_SESSION['server']['temp']['dir']."/devices-".$_SESSION['domain_name'].".csv";
+		$file = $_SESSION['server']['temp']['dir']."/extensions-".$_SESSION['domain_name'].".csv";
 		file_put_contents($file, $_POST['data']);
 		$_SESSION['file'] = $file;
 	}
 
 //copy the csv file
 	//$_POST['submit'] == "Upload" &&
-	if ( is_uploaded_file($_FILES['ulfile']['tmp_name']) && permission_exists('device_imports')) {
+	if ( is_uploaded_file($_FILES['ulfile']['tmp_name']) && permission_exists('extension_imports')) {
 		if (check_str($_POST['type']) == 'csv') {
 			move_uploaded_file($_FILES['ulfile']['tmp_name'], $_SESSION['server']['temp']['dir'].'/'.$_FILES['ulfile']['name']);
 			$save_msg = "Uploaded file to ".$_SESSION['server']['temp']['dir']."/". htmlentities($_FILES['ulfile']['name']);
@@ -93,7 +93,7 @@
 
 		//get the schema
 			$x = 0;
-			include ("app/devices/app_config.php");
+			include ("app/extensions/app_config.php");
 			$i = 0;
 			foreach($apps[0]['db'] as $table) {
 				//get the table name and parent name
@@ -109,8 +109,7 @@
 				}
 
 				//filter for specific tables and build the schema array
-				if ($table_name == "devices" || $table_name == "device_lines" || 
-					$table_name == "device_keys" || $table_name == "device_settings") {
+				if ($table_name == "extensions") {
 					$schema[$i]['table'] = $table_name;
 					$schema[$i]['parent'] = $parent_name;
 					foreach($table['fields'] as $row) {
@@ -139,7 +138,7 @@
 		//form to match the fields to the column names
 			require_once "resources/header.php";
 
-			echo "<form action='device_imports.php' method='POST' enctype='multipart/form-data' name='frmUpload' onSubmit=''>\n";
+			echo "<form action='extension_imports.php' method='POST' enctype='multipart/form-data' name='frmUpload' onSubmit=''>\n";
 			echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 
 			echo "	<tr>\n";
@@ -147,7 +146,7 @@
 			echo "		<b>".$text['header-import']."</b><br />\n";
 			echo "	</td>\n";
 			echo "	<td valign='top' align='right'>\n";
-			echo "		<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='../devices/devices.php'\" value='".$text['button-back']."'>\n";
+			echo "		<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='../extensions/extensions.php'\" value='".$text['button-back']."'>\n";
 			echo "		<input name='submit' type='submit' class='btn' id='import' value=\"".$text['button-import']."\">\n";
 			echo "	</td>\n";
 			echo "	</tr>\n";
@@ -160,7 +159,7 @@
 			//echo "<tr>\n";
 			//echo "<td align='left' width='30%' nowrap='nowrap'><b>".$text['header-import']."</b></td>\n";
 			//echo "<td width='70%' align='right'>\n";
-			//echo "	<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='../devices/devices.php'\" value='".$text['button-back']."'>\n";
+			//echo "	<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='../extensions/extensions.php'\" value='".$text['button-back']."'>\n";
 			//echo "</td>\n";
 			//echo "</tr>\n";
 
@@ -295,8 +294,8 @@
 
 									//save to the data
 										$database = new database;
-										$database->app_name = 'devices';
-										$database->app_uuid = '4efa1a1a-32e7-bf83-534b-6c8299958a8e';
+										$database->app_name = 'extensions';
+										$database->app_uuid = 'e68d9689-2769-e013-28fa-6214bf47fca3';
 										$database->save($array);
 										//$message = $database->message;
 
@@ -322,14 +321,14 @@
 				//save to the data
 					if (is_array($array)) {
 						$database = new database;
-						$database->app_name = 'devices';
-						$database->app_uuid = '4efa1a1a-32e7-bf83-534b-6c8299958a8e';
+						$database->app_name = 'extensions';
+						$database->app_uuid = 'e68d9689-2769-e013-28fa-6214bf47fca3';
 						$database->save($array);
 						//$message = $database->message;
 					}
 
 				//send the redirect header
-					header("Location: ../devices/devices.php");
+					header("Location: extensions.php");
 					return;
 			}
 	}
@@ -345,7 +344,7 @@
 	echo "		".$text['description-import']."\n";
 	echo "	</td>\n";
 	echo "	<td valign='top' width='70%' align='right'>\n";
-	echo "		<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='../devices/devices.php?".$_GET["query_string"]."'\" value='".$text['button-back']."'>\n";
+	echo "		<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='extensions.php?".$_GET["query_string"]."'\" value='".$text['button-back']."'>\n";
 	//echo "		<input name='submit' type='submit' class='btn' id='import' value=\"".$text['button-import']."\">\n";
 	echo "	</td>\n";
 	echo "	</tr>\n";
