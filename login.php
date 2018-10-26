@@ -1,6 +1,6 @@
 <?php
 /*
-	FusionPBX
+	PA conneX IP PBX
 	Version: MPL 1.1
 
 	The contents of this file are subject to the Mozilla Public License Version
@@ -13,15 +13,15 @@
 	for the specific language governing rights and limitations under the
 	License.
 
-	The Original Code is FusionPBX
-
 	The Initial Developer of the Original Code is
-	Mark J Crane <markjcrane@fusionpbx.com>
+	Mark J Crane 
 	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
+	Custom PA code developed by Kurt M Ingleson and are copyright (C) 2018
 
 	Contributor(s):
-	Mark J. Crane <markjcrane@fusionpbx.com>
+	Mark J. Crane 
+	Kurt M Ingleson
 */
 //includes
 	include "root.php";
